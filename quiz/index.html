@@ -719,16 +719,41 @@ function submitGate() {
   const email = document.getElementById('email').value.trim();
   if (!firstName) { document.getElementById('firstName').focus(); return; }
   if (!email || !email.includes('@')) { document.getElementById('email').focus(); return; }
-  // Save locally + queue Kit form submission (wired next session)
+  // Save locally
   try {
     localStorage.setItem('kick_lead', JSON.stringify({ firstName, email, answers, at: Date.now() }));
   } catch(e) {}
-  // TODO: POST to Kit form endpoint once form is created
-  // fetch('https://app.kit.com/forms/FORM_ID/subscriptions', { method: 'POST', body: ... })
+  // Submit to Kit (Kick_Growth_Check form 9926664)
+  try {
+    const fd = new FormData();
+    fd.append('email_address', email);
+    fd.append('first_name', firstName);
+    // Store the biggest-gap factor as a Kit tag/field for segmentation
+    fd.append('fields[gap_factor]', computeTopFactor(answers));
+    fetch('https://app.kit.com/forms/9926664/subscriptions', {
+      method: 'POST',
+      body: fd,
+      mode: 'no-cors'
+    }).catch(()=>{});
+  } catch(e) {}
   gate.classList.remove('active');
   progressBar.style.width = '100%';
   stepCount.textContent = 'Complete';
   renderReport(firstName);
+}
+
+function computeTopFactor(answers) {
+  const scores = { nutrition: 0, hydration: 0, sleep: 0, recovery: 0, routine: 0 };
+  const maxes = { nutrition: 0, hydration: 0, sleep: 0, recovery: 0, routine: 0 };
+  Object.values(answers).forEach(a => {
+    if (a.factor && typeof a.value === 'number') { scores[a.factor] += a.value; maxes[a.factor] += 3; }
+  });
+  let top = 'nutrition', topPct = -1;
+  Object.keys(scores).forEach(f => {
+    const pct = maxes[f] ? scores[f] / maxes[f] : 0;
+    if (pct > topPct) { topPct = pct; top = f; }
+  });
+  return top;
 }
 
 function renderReport(firstName) {
