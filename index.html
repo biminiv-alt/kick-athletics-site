@@ -308,8 +308,34 @@
     line-height: 1.55;
   }
 </style>
+<!-- Meta Pixel (Kick Athletics) - PIXEL_ID placeholder -->
+<script>
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+var KICK_META_PIXEL_ID = 'REPLACE_ME_KICK_PIXEL_ID';
+if (KICK_META_PIXEL_ID && KICK_META_PIXEL_ID !== 'REPLACE_ME_KICK_PIXEL_ID') {
+  fbq('init', KICK_META_PIXEL_ID);
+  fbq('track', 'PageView');
+}
+</script>
+<!-- /Meta Pixel -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-HWE08FHRDH"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-HWE08FHRDH');</script>
+<script>
+// UTM capture — persist to sessionStorage so the quiz can attach them to Kit fields
+(function(){
+  try {
+    var params = new URLSearchParams(window.location.search);
+    var UTM_KEYS = ['utm_source','utm_medium','utm_campaign','utm_content','utm_term'];
+    var stored = {};
+    try { stored = JSON.parse(sessionStorage.getItem('kick_utm')||'{}'); } catch(e){}
+    UTM_KEYS.forEach(function(k){
+      var v = params.get(k);
+      if (v) stored[k] = v;
+    });
+    sessionStorage.setItem('kick_utm', JSON.stringify(stored));
+  } catch(e) {}
+})();
+</script>
 </head>
 
 <body>
@@ -329,7 +355,7 @@
       <span class="kicker">For parents of youth athletes</span>
       <h1>Your athlete is working so hard. Why do other kids keep <em>pulling ahead</em>?</h1>
       <p class="lede">If you're watching your child put in the work and still slip behind teammates, you're not imagining it. There are performance factors most families never think about, and they may be quietly holding your athlete back.</p>
-      <a href="#quiz" class="hero-cta">Find the gap in 3 minutes</a>
+      <a href="/quiz/" class="hero-cta">Find the gap in 3 minutes</a>
       <span class="hero-sub">Free assessment. No signup wall.</span>
     </div>
   </section>
