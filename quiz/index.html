@@ -106,6 +106,23 @@
     font-size: 16px;
     margin-bottom: 36px;
   }
+  .quiz-intro { padding: 20px 0 32px; }
+  .quiz-intro .intro-lede {
+    color: var(--ink-soft);
+    font-size: 18px;
+    line-height: 1.55;
+    margin: 8px 0 32px;
+    max-width: 620px;
+  }
+  .quiz-intro .nav-buttons { margin-top: 8px; }
+  .waitlist-subhead {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 17px;
+    color: var(--ink-soft);
+    text-align: center;
+    margin-bottom: 14px;
+  }
 
   .options {
     display: flex; flex-direction: column; gap: 12px;
@@ -503,8 +520,9 @@ fbq('track', 'PageView');
 
       <div class="cta-card" id="foundingCard" style="background:var(--card); color:var(--ink); border:1px solid var(--line); box-shadow:var(--shadow-lg); margin-top: 24px;">
         <div class="q-kicker" style="text-align:center;color:var(--accent);">Founding member</div>
+        <div class="waitlist-subhead">You cannot control the lineup. Make sure fuel is never the reason.</div>
         <h3 style="color:var(--ink);">The <em style="color:var(--accent);">Close the Gap</em> membership is opening.</h3>
-        <p style="color:var(--ink-soft);">A $29/month membership: fueling and recovery plans built for youth athletes 9 to 15, updated as your athlete grows. Founding members lock in the launch price and get first access.</p>
+        <p style="color:var(--ink-soft);">A $29/month membership: fueling and recovery plans built for youth athletes 9 to 15, updated as your athlete grows, so you know you are leaving nothing undone. Founding members lock in the launch price and get first access.</p>
         <div id="foundingForm">
           <label for="foundingEmail" style="display:block;font-size:13px;color:var(--ink-soft);margin-bottom:6px;text-align:left;">Your email</label>
           <input type="email" id="foundingEmail" placeholder="you@example.com" style="width:100%;padding:12px;border:1px solid var(--line);border-radius:8px;font-size:16px;margin-bottom:12px;box-sizing:border-box;background:#fff;color:var(--ink);" />
@@ -665,7 +683,7 @@ const FACTOR_META = {
   },
   hydration: {
     name: 'Hydration',
-    body: "<p>Your athlete's biggest gap is hydration, and it is probably costing more than you think.</p><p>Even mild dehydration slows reaction time and makes every sprint feel harder. The classic second-half fade, great early and gone late, is often a hydration problem wearing a fitness disguise. A kid who is gassed in the final quarter is not getting the benefit of their conditioning, and coaches give late-game minutes to the athletes still moving. That is the difference between the kid coach pulls at minute 55 and the kid coach keeps on for the finish.</p><p>Water alone usually is not enough. Sweat takes salt with it, and salt is what keeps the water working.</p>",
+    body: "<p>Your athlete's biggest gap is hydration, and it is probably costing more than you think.</p><p>Even mild dehydration slows reaction time and makes every sprint feel harder. The classic second-half fade, great early and gone late, is often a hydration problem wearing a fitness disguise. A kid who is gassed in the final quarter is not getting the benefit of their conditioning, and coaches give late-game minutes to the athletes still moving. That is the difference between the kid coach pulls at minute 55 and the kid coach keeps on for the finish.</p><p>Water alone usually is not enough. Sweat takes salt with it, and salt is what keeps the water working.</p><p>And skip the neon sugar bombs. Most kids' sports drinks are candy marketed as fuel. Sodium is what matters, not color.</p>",
     thisWeek: "The day before the next game, have your athlete drink water normally through the day and eat normally salted food. On game day, add a sports drink with real sodium (300mg or more per serving) for anything over an hour."
   },
   sleep: {
@@ -870,7 +888,24 @@ function renderReport(firstName) {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-render();
+function showIntro() {
+  stepCount.textContent = '3 minute check';
+  progressBar.style.width = '0%';
+  container.innerHTML = `
+    <div class="quiz-intro">
+      <div class="q-kicker">Performance Check</div>
+      <h1 class="q-title">Find your athlete's biggest gap.</h1>
+      <p class="intro-lede">You cannot control the lineup, the politics, or the price of travel ball. But five things decide whether your kid finishes games, and they are all in your hands. Three minutes. Find your athlete's biggest gap.</p>
+      <div class="nav-buttons">
+        <button class="btn btn-primary" id="startBtn" type="button">Start the check &rarr;</button>
+      </div>
+    </div>
+  `;
+  const sb = document.getElementById('startBtn');
+  if (sb) sb.addEventListener('click', () => { currentIdx = 0; render(); });
+}
+
+showIntro();
 
 
 // Founding waitlist submit
