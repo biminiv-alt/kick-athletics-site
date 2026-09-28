@@ -431,10 +431,17 @@
     margin: 0 auto;
   }
 </style>
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-HWE08FHRDH"></script>
-<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-HWE08FHRDH');</script>
+<!-- Meta Pixel (Kick Athletics) - PIXEL_ID placeholder -->
+<script>
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+var KICK_META_PIXEL_ID = 'REPLACE_ME_KICK_PIXEL_ID';
+if (KICK_META_PIXEL_ID && KICK_META_PIXEL_ID !== 'REPLACE_ME_KICK_PIXEL_ID') {
+  fbq('init', KICK_META_PIXEL_ID);
+  fbq('track', 'PageView');
+}
+</script>
+<!-- /Meta Pixel -->
 </head>
-
 <body>
 <header>
   <div class="nav">
@@ -495,6 +502,19 @@
         <h3>Want the full <em>7-Day Plan</em>?</h3>
         <p>The plan gives your athlete one small change per day across all five factors, built for the age and sport you told us about.</p>
         <a href="#" class="btn btn-primary" id="planCta">Get the 7-day plan</a>
+      
+      <div class="cta-card" id="foundingCard" style="background:var(--card); color:var(--ink); border:1px solid var(--line); box-shadow:var(--shadow-lg); margin-top: 24px;">
+        <div class="q-kicker" style="text-align:center;color:var(--accent);">Founding member</div>
+        <h3 style="color:var(--ink);">The <em style="color:var(--accent);">Close the Gap</em> membership is opening.</h3>
+        <p style="color:var(--ink-soft);">A $29/month membership: fueling and recovery plans built for youth athletes 9 to 15, updated as your athlete grows. Founding members lock in the launch price and get first access.</p>
+        <div id="foundingForm">
+          <button type="button" class="btn btn-primary" id="foundingBtn" style="background:var(--accent);color:#fff;">Save my spot</button>
+          <p style="font-size:13px;color:var(--ink-mute);margin-top:12px;">No card required. We will email you when the membership opens.</p>
+        </div>
+        <div id="foundingThanks" style="display:none;">
+          <div style="font-family:'Fraunces',serif;font-size:22px;color:var(--accent);margin-bottom:8px;">You are on the list.</div>
+          <p style="color:var(--ink-soft);font-size:15px;">We will email you the moment the membership opens.</p>
+        </div>
       </div>
     </div>
   </div>
@@ -507,6 +527,23 @@
 </footer>
 
 <script>
+
+// UTM capture (persist across nav)
+(function(){
+  try {
+    var params = new URLSearchParams(window.location.search);
+    var UTM_KEYS = ['utm_source','utm_medium','utm_campaign','utm_content','utm_term'];
+    var stored = {};
+    try { stored = JSON.parse(sessionStorage.getItem('kick_utm')||'{}'); } catch(e){}
+    UTM_KEYS.forEach(function(k){
+      var v = params.get(k);
+      if (v) stored[k] = v;
+    });
+    sessionStorage.setItem('kick_utm', JSON.stringify(stored));
+    window.__KICK_UTMS = stored;
+  } catch(e) { window.__KICK_UTMS = {}; }
+})();
+
 const QUESTIONS = [
   {
     id: 'sport', kicker: 'The basics', factor: null,
@@ -717,28 +754,58 @@ function showGate() {
   document.getElementById('gateSubmit').addEventListener('click', submitGate);
 }
 
-function submitGate() {
+async function submitGate() {
   const firstName = document.getElementById('firstName').value.trim();
   const email = document.getElementById('email').value.trim();
   if (!firstName) { document.getElementById('firstName').focus(); return; }
   if (!email || !email.includes('@')) { document.getElementById('email').focus(); return; }
-  // Save locally
+  const btn = document.getElementById('gateSubmit');
+  btn.disabled = true;
+  const originalLabel = btn.textContent;
+  btn.textContent = 'Sending your report...';
   try {
     localStorage.setItem('kick_lead', JSON.stringify({ firstName, email, answers, at: Date.now() }));
   } catch(e) {}
-  // Submit to Kit (Kick_Growth_Check form 9926664)
+  const topFactor = computeTopFactor(answers);
+  const utms = window.__KICK_UTMS || {};
+  const fields = {
+    gap_factor: topFactor,
+    intent: 'performance_check',
+    utm_source: utms.utm_source || '',
+    utm_medium: utms.utm_medium || '',
+    utm_campaign: utms.utm_campaign || '',
+    utm_content: utms.utm_content || ''
+  };
   try {
-    const fd = new FormData();
-    fd.append('email_address', email);
-    fd.append('first_name', firstName);
-    // Store the biggest-gap factor as a Kit tag/field for segmentation
-    fd.append('fields[gap_factor]', computeTopFactor(answers));
-    fetch('https://app.kit.com/forms/9926664/subscriptions', {
+    const resp = await fetch('https://api.convertkit.com/v3/forms/9926664/subscribe', {
       method: 'POST',
-      body: fd,
-      mode: 'no-cors'
-    }).catch(()=>{});
-  } catch(e) {}
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        api_key: '9JSd-76ZSveD4nbFfGu8ow',
+        email: email,
+        first_name: firstName,
+        fields: fields
+      })
+    });
+    if (!resp.ok) throw new Error('kit failed');
+    const data = await resp.json();
+    if (!data.subscription) throw new Error('no subscription');
+    try {
+      if (window.fbq) {
+        fbq('track', 'Lead', { content_name: 'Kick Performance Check', content_category: 'Quiz' });
+      }
+    } catch(e) {}
+    try { if (window.gtag) gtag('event', 'quiz_lead', { content_name: 'kick_performance_check' }); } catch(e) {}
+  } catch(err) {
+    btn.disabled = false;
+    btn.textContent = originalLabel;
+    const fine = document.querySelector('.gate-fine');
+    if (fine) {
+      fine.style.color = '#c85a3a';
+      fine.textContent = 'Something went wrong sending your report. Please try again in a moment.';
+    }
+    return;
+  }
   gate.classList.remove('active');
   progressBar.style.width = '100%';
   stepCount.textContent = 'Complete';
@@ -803,6 +870,52 @@ function renderReport(firstName) {
 }
 
 render();
+
+
+// Founding waitlist submit
+(function(){
+  document.addEventListener('click', async function(e){
+    const btn = e.target.closest && e.target.closest('#foundingBtn');
+    if (!btn) return;
+    const stored = (function(){ try { return JSON.parse(localStorage.getItem('kick_lead')||'{}'); } catch(e){ return {}; } })();
+    const email = (stored && stored.email) || '';
+    if (!email) {
+      alert('Please complete the check first.');
+      return;
+    }
+    btn.disabled = true;
+    btn.textContent = 'Saving your spot...';
+    const utms = window.__KICK_UTMS || {};
+    try {
+      const resp = await fetch('https://api.convertkit.com/v3/forms/9926664/subscribe', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          api_key: '9JSd-76ZSveD4nbFfGu8ow',
+          email: email,
+          fields: {
+            intent: 'founding_waitlist',
+            waitlist: 'yes',
+            utm_source: utms.utm_source || '',
+            utm_medium: utms.utm_medium || '',
+            utm_campaign: utms.utm_campaign || '',
+            utm_content: utms.utm_content || ''
+          }
+        })
+      });
+      if (!resp.ok) throw new Error('kit failed');
+      try { if (window.fbq) fbq('track', 'CompleteRegistration', { content_name: 'Kick Founding Waitlist' }); } catch(e) {}
+      try { if (window.gtag) gtag('event', 'founding_waitlist_signup', { content_name: 'kick_founding_waitlist' }); } catch(e) {}
+      document.getElementById('foundingForm').style.display = 'none';
+      document.getElementById('foundingThanks').style.display = 'block';
+    } catch(err) {
+      btn.disabled = false;
+      btn.textContent = 'Save my spot';
+      alert('Something went wrong. Please try again.');
+    }
+  });
+})();
+
 </script>
 </body>
 </html>
