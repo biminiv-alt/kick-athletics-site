@@ -471,7 +471,7 @@ fbq('track', 'PageView');
         Kick Athletics
       </div>
     </a>
-    <div class="step-count" id="stepCount">Question 1 of 10</div>
+    <div class="step-count" id="stepCount">60 seconds</div>
   </div>
 </header>
 
@@ -484,39 +484,24 @@ fbq('track', 'PageView');
 
     <!-- Email gate -->
     <div class="gate" id="gate">
-      <div class="q-kicker">One last step</div>
-      <h1 class="gate-title">Where should we send your <em>gap report</em>?</h1>
-      <p class="gate-lede">We'll email you the full report, plus what actually closes the biggest gap for your athlete.</p>
+      <div class="q-kicker">Your plan</div>
+      <h1 class="gate-title" id="gateTitle">Your game-day fuel plan is <em>ready</em>.</h1>
+      <p class="gate-lede">The plan covers pre-game, between games, and exactly what to pack. We will send it to your inbox now.</p>
       <div class="gate-card">
         <label class="field-label" for="firstName">First name</label>
         <input type="text" id="firstName" class="field-input" placeholder="Sarah" autocomplete="given-name"/>
         <label class="field-label" for="email">Email</label>
         <input type="email" id="email" class="field-input" placeholder="you@email.com" autocomplete="email"/>
-        <button class="gate-submit" id="gateSubmit">See my athlete's gap report</button>
+        <button class="gate-submit" id="gateSubmit">Send me the plan</button>
         <p class="gate-fine">No spam. Unsubscribe any time. We will never share your email.</p>
       </div>
     </div>
 
-    <!-- Report -->
+    <!-- Post-email thank-you -->
     <div class="report" id="report">
-      <div class="report-kicker">Your athlete's report</div>
-      <h1 class="report-title">The one thing to <em>focus on</em>.</h1>
+      <div class="report-kicker">Your plan is on the way</div>
+      <h1 class="report-title" id="reportTitle">Check your <em>inbox</em>.</h1>
       <p class="report-sub" id="reportSub"></p>
-
-      <div class="gap-hero">
-        <div class="gap-hero-label">Biggest gap</div>
-        <div class="gap-hero-name" id="gapName"></div>
-        <div class="gap-hero-body" id="gapBody"></div>
-        <div class="this-week">
-          <div class="this-week-label">This week</div>
-          <div class="this-week-text" id="thisWeek"></div>
-        </div>
-      </div>
-
-      <div class="scoreboard">
-        <div class="scoreboard-title">All five factors, scored</div>
-        <div id="scoreList"></div>
-      </div>
 
       <div class="cta-card" id="foundingCard" style="background:var(--card); color:var(--ink); border:1px solid var(--line); box-shadow:var(--shadow-lg); margin-top: 24px;">
         <div class="q-kicker" style="text-align:center;color:var(--accent);">Founding member</div>
@@ -564,23 +549,22 @@ fbq('track', 'PageView');
 
 const QUESTIONS = [
   {
-    id: 'sport', kicker: 'The basics', factor: null,
+    id: 'sport', kicker: 'Basics',
     title: "What sport does your athlete play most?",
-    hint: "If they play more than one, pick the one they compete in seriously.",
     options: [
       { text: "Soccer", value: "soccer" },
       { text: "Basketball", value: "basketball" },
       { text: "Baseball or softball", value: "baseball" },
       { text: "Lacrosse", value: "lacrosse" },
-      { text: "Swimming", value: "swimming" },
       { text: "Volleyball", value: "volleyball" },
+      { text: "Football", value: "football" },
+      { text: "Swimming", value: "swimming" },
       { text: "Other", value: "other" }
     ]
   },
   {
-    id: 'age', kicker: 'The basics', factor: null,
+    id: 'age', kicker: 'Basics',
     title: "How old is your athlete?",
-    hint: "Everything we recommend is scaled to their age.",
     options: [
       { text: "9 or younger", value: "9" },
       { text: "10 to 11", value: "10" },
@@ -590,117 +574,41 @@ const QUESTIONS = [
     ]
   },
   {
-    id: 'playtime', kicker: 'The situation', factor: null,
-    title: "How would you describe their playing time right now?",
-    hint: "Honest answer helps the report.",
+    id: 'pain', kicker: 'Fueling',
+    title: "What's the hardest part of game-day fueling?",
     options: [
-      { text: "Starter, plays most of the game", value: 0 },
-      { text: "Regular rotation, gets solid minutes", value: 1 },
-      { text: "In the mix but not starting", value: 2 },
-      { text: "Bench most games, wants more", value: 3 }
+      { text: "Early-morning games", value: "morning" },
+      { text: "Eating between games", value: "between" },
+      { text: "Picky eater", value: "picky" },
+      { text: "Honestly, I wing it", value: "wing" }
     ]
   },
   {
-    id: 'nutrition_gameday', kicker: 'Nutrition', factor: 'nutrition',
-    title: "What does their game-day breakfast usually look like?",
-    hint: "Two or three hours before a morning game.",
+    id: 'games', kicker: 'Tournaments',
+    title: "In a typical tournament weekend, how many games?",
     options: [
-      { text: "Balanced plate: protein, carbs, some fruit", value: 0 },
-      { text: "Cereal or toast, nothing fancy", value: 2 },
-      { text: "Skips it or grabs a bar in the car", value: 3 },
-      { text: "Depends on the day, no set routine", value: 2 }
-    ]
-  },
-  {
-    id: 'nutrition_snack', kicker: 'Nutrition', factor: 'nutrition',
-    title: "What do they eat between games in a tournament?",
-    options: [
-      { text: "Real food: sandwich, fruit, cheese, water", value: 0 },
-      { text: "Snacks the tournament sells (pretzels, candy, soda)", value: 3 },
-      { text: "One small bar or protein shake", value: 2 },
-      { text: "Not much, they aren't hungry", value: 3 }
-    ]
-  },
-  {
-    id: 'hydration', kicker: 'Hydration', factor: 'hydration',
-    title: "How much water does your athlete drink on a normal day?",
-    hint: "Not counting sports drinks or juice.",
-    options: [
-      { text: "A full water bottle refilled 3+ times", value: 0 },
-      { text: "One or two water bottles across the day", value: 2 },
-      { text: "Whatever's around, mostly at meals", value: 3 },
-      { text: "Not sure, I don't really track it", value: 2 }
-    ]
-  },
-  {
-    id: 'sleep_hours', kicker: 'Sleep', factor: 'sleep',
-    title: "How many hours do they usually sleep on a school night?",
-    options: [
-      { text: "9 to 11 hours", value: 0 },
-      { text: "8 to 9 hours", value: 1 },
-      { text: "7 to 8 hours", value: 2 },
-      { text: "6 to 7 hours or less", value: 3 }
-    ]
-  },
-  {
-    id: 'sleep_consistency', kicker: 'Sleep', factor: 'sleep',
-    title: "How consistent is their bedtime across the week?",
-    options: [
-      { text: "Same time within 30 minutes, most nights", value: 0 },
-      { text: "Consistent on school nights, later on weekends", value: 1 },
-      { text: "Varies by an hour or two, depending on activities", value: 2 },
-      { text: "All over the place", value: 3 }
-    ]
-  },
-  {
-    id: 'recovery', kicker: 'Recovery', factor: 'recovery',
-    title: "What does the 24 hours after a hard game usually look like?",
-    options: [
-      { text: "Real food, water, early night, no screens late", value: 0 },
-      { text: "Normal day, nothing special", value: 2 },
-      { text: "Another practice or training session", value: 3 },
-      { text: "Fast food and a movie, they earned it", value: 2 }
-    ]
-  },
-  {
-    id: 'routine', kicker: 'Game routine', factor: 'routine',
-    title: "How locked in is their pregame routine?",
-    hint: "Same meal, same warmup timing, same mental prep.",
-    options: [
-      { text: "Very consistent, same routine every game", value: 0 },
-      { text: "Mostly consistent, small variations", value: 1 },
-      { text: "Loosely consistent, depends on the day", value: 2 },
-      { text: "No real routine, we wing it", value: 3 }
+      { text: "1 to 2", value: "1_2" },
+      { text: "3 to 4", value: "3_4" },
+      { text: "5 or more", value: "5_plus" }
     ]
   }
 ];
 
-const FACTOR_META = {
-  nutrition: {
-    name: 'Nutrition',
-    body: "<p>Your athlete's biggest gap is nutrition. The fuel going in does not match the effort going out.</p><p>Under-fueled athletes fade in the second half, recover slower between games, and lose sharpness exactly when games are decided. Coaches notice who is still impacting the game in the final quarter, and late-game minutes go to the kids still running. That is the difference between the kid coach pulls at minute 55 and the kid coach keeps on for the finish.</p><p>This is not about eating more. It is about the right fuel at the right time around play.</p>",
-    thisWeek: "3 to 4 hours before the next game, serve a real carbohydrate-rich meal. Pasta, rice, pancakes, a sandwich. Something they have eaten a hundred times. Nothing new on game day."
-  },
-  hydration: {
-    name: 'Hydration',
-    body: "<p>Your athlete's biggest gap is hydration, and it is probably costing more than you think.</p><p>Even mild dehydration slows reaction time and makes every sprint feel harder. The classic second-half fade, great early and gone late, is often a hydration problem wearing a fitness disguise. A kid who is gassed in the final quarter is not getting the benefit of their conditioning, and coaches give late-game minutes to the athletes still moving. That is the difference between the kid coach pulls at minute 55 and the kid coach keeps on for the finish.</p><p>Water alone usually is not enough. Sweat takes salt with it, and salt is what keeps the water working.</p><p>And skip the neon sugar bombs. Most kids' sports drinks are candy marketed as fuel. Sodium is what matters, not color.</p>",
-    thisWeek: "The day before the next game, have your athlete drink water normally through the day and eat normally salted food. On game day, add a sports drink with real sodium (300mg or more per serving) for anything over an hour."
-  },
-  sleep: {
-    name: 'Sleep',
-    body: "<p>Your athlete's biggest gap is sleep. The performance input nobody talks about at the fields.</p><p>Short sleep slows reaction time, dulls decision-making under pressure, and slows the overnight repair growing athletes depend on. On the field it reads as being a step slow, frustrating easily, or carrying soreness from Tuesday into Saturday. Coaches often read it as effort or sharpness. It is usually neither. It is fatigue, and that is the difference between the kid coach pulls at minute 55 and the kid coach keeps on for the finish.</p><p>Of the five factors, this is the cheapest to fix. It costs nothing. It just needs defending.</p>",
-    thisWeek: "Anchor the wake-up time. Same time every day, weekends within an hour. It is the single most powerful lever for sleep quality, and it is easier to enforce than bedtime. Phones charge outside the bedroom."
-  },
-  recovery: {
-    name: 'Recovery',
-    body: "<p>Your athlete's biggest gap is recovery. What happens in the 24 hours after hard effort.</p><p>Recovery decides how fresh your athlete is for the next one, and tournaments are where this shows up brutally. Heavy legs in game two, empty in game three, right when spots and minutes are being won. The families whose kids still have legs at 4 PM are not fitter. They are better recovered. That is the difference between the kid coach pulls at minute 55 and the kid coach keeps on for the finish.</p><p>The highest-value window is the 30 to 60 minutes after a game, when muscles are primed to restock.</p>",
-    thisWeek: "After the next game, get food in within 30 minutes. Chocolate milk and a banana in the car counts. Then protect sleep that night. That is when the real repair happens."
-  },
-  routine: {
-    name: 'Game routine',
-    body: "<p>Your athlete's biggest gap is game routine. The hour before the whistle.</p><p>The pregame window sets the first twenty minutes, and first impressions shape a coach's trust for the rest of the game. A scattered pregame (rushed meal, no warm-up rhythm, nervous energy) produces slow starts. And slow starts cost minutes, because coaches reward the kids who look ready from the opening whistle. That is the difference between the kid coach pulls at minute 55 and the kid coach keeps on for the finish.</p><p>This is the most controllable factor on the list. It is pure routine.</p>",
-    thisWeek: "Build a simple, repeatable pregame. Same meal timing (small familiar snack 1 to 2 hours out), same warm-up, same arrival time. Boring is the point. Routine removes variables so the athlete can just play."
-  }
+// Display-friendly labels for the personalized teaser headline
+const SPORT_LABEL = {
+  soccer: 'soccer', basketball: 'basketball', baseball: 'baseball',
+  lacrosse: 'lacrosse', volleyball: 'volleyball', football: 'football',
+  swimming: 'swimming', other: 'your sport'
+};
+const AGE_LABEL = {
+  '9': '9 or younger', '10': '10 to 11', '12': '12 to 13',
+  '14': '14 to 15', '16': '16 or older'
+};
+const PAIN_PHRASE = {
+  morning: 'early-morning games',
+  between: 'eating between games',
+  picky: 'a picky eater',
+  wing:   'no set routine'
 };
 
 let currentIdx = 0;
@@ -719,36 +627,36 @@ function render() {
     <div class="question-block active">
       <div class="q-kicker">${q.kicker}</div>
       <h1 class="q-title">${q.title}</h1>
-      ${q.hint ? `<p class="q-hint">${q.hint}</p>` : ''}
       <div class="options">
         ${q.options.map((o, i) => `<button class="option" data-i="${i}" type="button">${o.text}</button>`).join('')}
       </div>
       <div class="nav-buttons">
-        <button class="btn btn-secondary" id="backBtn" ${currentIdx === 0 ? 'style="visibility:hidden;"' : ''}>← Back</button>
-        <button class="btn btn-primary" id="nextBtn" disabled>Continue →</button>
+        <button class="btn btn-secondary" id="backBtn" type="button" ${currentIdx === 0 ? 'style="visibility:hidden;"' : ''}>&larr; Back</button>
       </div>
     </div>
   `;
-  selected = null;
   const opts = container.querySelectorAll('.option');
   opts.forEach(el => {
     el.addEventListener('click', () => {
-      opts.forEach(x => x.classList.remove('selected'));
+      const i = parseInt(el.dataset.i, 10);
+      selected = i;
+      opts.forEach(x => { x.disabled = true; x.classList.remove('selected'); });
       el.classList.add('selected');
-      selected = parseInt(el.dataset.i, 10);
-      document.getElementById('nextBtn').disabled = false;
+      // Single-tap auto-advance
+      setTimeout(next, 180);
     });
   });
-  document.getElementById('nextBtn').addEventListener('click', next);
   const backBtn = document.getElementById('backBtn');
   if (backBtn) backBtn.addEventListener('click', back);
   progressBar.style.width = `${((currentIdx) / QUESTIONS.length) * 100}%`;
-  stepCount.textContent = `Question ${currentIdx + 1} of ${QUESTIONS.length}`;
+  stepCount.textContent = `Step ${currentIdx + 1} of ${QUESTIONS.length}`;
 }
 
 function next() {
   const q = QUESTIONS[currentIdx];
-  answers[q.id] = { factor: q.factor, value: q.options[selected].value, text: q.options[selected].text };
+  const opt = q.options[selected];
+  if (!opt) return;
+  answers[q.id] = { value: opt.value, text: opt.text };
   if (currentIdx < QUESTIONS.length - 1) {
     currentIdx++;
     render();
@@ -767,9 +675,21 @@ function back() {
 function showGate() {
   container.innerHTML = '';
   progressBar.style.width = '90%';
-  stepCount.textContent = 'Report ready';
+  stepCount.textContent = 'Almost there';
+
+  // Personalized teaser headline from Q1 (sport), Q2 (age), Q3 (hardest part)
+  const sport = SPORT_LABEL[answers.sport?.value] || 'your sport';
+  const age = AGE_LABEL[answers.age?.value] || '';
+  const pain = PAIN_PHRASE[answers.pain?.value] || 'game-day fueling';
+  const ageBit = age ? `, age ${age}` : '';
+  const title = document.getElementById('gateTitle');
+  if (title) {
+    title.innerHTML = `Your game-day fuel plan for <em>${sport}</em>${ageBit}, built around <em>${pain}</em>.`;
+  }
+
   gate.classList.add('active');
   document.getElementById('gateSubmit').addEventListener('click', submitGate);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 async function submitGate() {
@@ -780,15 +700,18 @@ async function submitGate() {
   const btn = document.getElementById('gateSubmit');
   btn.disabled = true;
   const originalLabel = btn.textContent;
-  btn.textContent = 'Sending your report...';
+  btn.textContent = 'Sending your plan...';
   try {
     localStorage.setItem('kick_lead', JSON.stringify({ firstName, email, answers, at: Date.now() }));
   } catch(e) {}
-  const topFactor = computeTopFactor(answers);
+
   const utms = window.__KICK_UTMS || {};
   const fields = {
-    gap_factor: topFactor,
-    intent: 'performance_check',
+    sport: answers.sport?.value || '',
+    age: answers.age?.value || '',
+    hardest_part: answers.pain?.value || '',
+    games_per_weekend: answers.games?.value || '',
+    intent: 'game_day_plan',
     utm_source: utms.utm_source || '',
     utm_medium: utms.utm_medium || '',
     utm_campaign: utms.utm_campaign || '',
@@ -810,17 +733,17 @@ async function submitGate() {
     if (!data.subscription) throw new Error('no subscription');
     try {
       if (window.fbq) {
-        fbq('track', 'Lead', { content_name: 'Kick Performance Check', content_category: 'Quiz' });
+        fbq('track', 'Lead', { content_name: 'Kick Game-Day Fuel Plan', content_category: 'Quiz' });
       }
     } catch(e) {}
-    try { if (window.gtag) gtag('event', 'quiz_lead', { content_name: 'kick_performance_check' }); } catch(e) {}
+    try { if (window.gtag) gtag('event', 'quiz_lead', { content_name: 'kick_game_day_fuel_plan' }); } catch(e) {}
   } catch(err) {
     btn.disabled = false;
     btn.textContent = originalLabel;
     const fine = document.querySelector('.gate-fine');
     if (fine) {
       fine.style.color = '#c85a3a';
-      fine.textContent = 'Something went wrong sending your report. Please try again in a moment.';
+      fine.textContent = 'Something went wrong. Please try again in a moment.';
     }
     return;
   }
@@ -831,73 +754,25 @@ async function submitGate() {
   try { const fe = document.getElementById('foundingEmail'); if (fe && email) fe.value = email; } catch(e) {}
 }
 
-function computeTopFactor(answers) {
-  const scores = { nutrition: 0, hydration: 0, sleep: 0, recovery: 0, routine: 0 };
-  const maxes = { nutrition: 0, hydration: 0, sleep: 0, recovery: 0, routine: 0 };
-  Object.values(answers).forEach(a => {
-    if (a.factor && typeof a.value === 'number') { scores[a.factor] += a.value; maxes[a.factor] += 3; }
-  });
-  let top = 'nutrition', topPct = -1;
-  Object.keys(scores).forEach(f => {
-    const pct = maxes[f] ? scores[f] / maxes[f] : 0;
-    if (pct > topPct) { topPct = pct; top = f; }
-  });
-  return top;
-}
-
 function renderReport(firstName) {
-  // Score the 5 factors
-  const scores = { nutrition: 0, hydration: 0, sleep: 0, recovery: 0, routine: 0 };
-  const maxes = { nutrition: 0, hydration: 0, sleep: 0, recovery: 0, routine: 0 };
-  Object.values(answers).forEach(a => {
-    if (a.factor && typeof a.value === 'number') {
-      scores[a.factor] += a.value;
-      maxes[a.factor] += 3;
-    }
-  });
-  // Find biggest gap
-  let topFactor = 'nutrition';
-  let topPct = -1;
-  Object.keys(scores).forEach(f => {
-    const pct = maxes[f] ? scores[f] / maxes[f] : 0;
-    if (pct > topPct) { topPct = pct; topFactor = f; }
-  });
-  const meta = FACTOR_META[topFactor];
-  document.getElementById('reportSub').textContent = `${firstName}, here's the one factor most likely holding your athlete back right now.`;
-  document.getElementById('gapName').textContent = meta.name;
-  document.getElementById('gapBody').innerHTML = meta.body;
-  document.getElementById('thisWeek').textContent = meta.thisWeek;
-
-  // Scoreboard
-  const list = document.getElementById('scoreList');
-  const factorOrder = ['nutrition', 'hydration', 'sleep', 'recovery', 'routine'];
-  list.innerHTML = factorOrder.map(f => {
-    const pct = maxes[f] ? scores[f] / maxes[f] : 0;
-    const label = pct >= 0.6 ? 'Focus here' : pct >= 0.3 ? 'Room to grow' : 'Solid';
-    const highClass = pct >= 0.6 ? 'high' : '';
-    return `
-      <div class="score-row">
-        <div class="score-name">${FACTOR_META[f].name}</div>
-        <div class="score-bar"><div class="score-fill ${highClass}" style="width:${Math.max(pct*100, 8)}%"></div></div>
-        <div class="score-label">${label}</div>
-      </div>
-    `;
-  }).join('');
-
+  const sub = document.getElementById('reportSub');
+  if (sub) {
+    sub.textContent = `Thanks ${firstName}. Your game-day fuel plan is on its way to your inbox now. Check the promotions tab if you do not see it in the next few minutes.`;
+  }
   report.classList.add('active');
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 function showIntro() {
-  stepCount.textContent = '3 minute check';
+  stepCount.textContent = '60 seconds';
   progressBar.style.width = '0%';
   container.innerHTML = `
     <div class="quiz-intro">
-      <div class="q-kicker">Performance Check</div>
-      <h1 class="q-title">Find your athlete's biggest gap.</h1>
-      <p class="intro-lede">You cannot control the lineup, the politics, or the price of travel ball. But five things decide whether your kid finishes games, and they are all in your hands. Three minutes. Find your athlete's biggest gap.</p>
+      <div class="q-kicker">Game-day fuel plan</div>
+      <h1 class="q-title">Fuel that fits your athlete.</h1>
+      <p class="intro-lede">You cannot control the lineup. You can control the fuel. Sixty seconds and 4 questions, and we build a plan for your athlete's sport, age, and the part of game day that trips your family up.</p>
       <div class="nav-buttons">
-        <button class="btn btn-primary" id="startBtn" type="button">Start the check &rarr;</button>
+        <button class="btn btn-primary" id="startBtn" type="button">Start &rarr;</button>
       </div>
     </div>
   `;
