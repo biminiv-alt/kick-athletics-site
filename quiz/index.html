@@ -780,7 +780,36 @@ function showIntro() {
   if (sb) sb.addEventListener('click', () => { currentIdx = 0; render(); });
 }
 
-showIntro();
+function showWaitlistOnly() {
+  // Direct-link entry for the founding member waitlist (used by the fuel-plan email P.S.).
+  // Skips intro, questions, and the quiz email gate; shows only the founding waitlist card.
+  container.innerHTML = '';
+  gate.classList.remove('active');
+  stepCount.textContent = 'Founding member';
+  progressBar.style.width = '100%';
+  const kicker = document.querySelector('.report-kicker');
+  const titleEl = document.getElementById('reportTitle');
+  const sub = document.getElementById('reportSub');
+  if (kicker) kicker.textContent = 'Founding member';
+  if (titleEl) titleEl.innerHTML = 'Join the <em>founding</em> waitlist.';
+  if (sub) sub.textContent = 'Lock in the launch price. We will email you the moment Close the Gap opens.';
+  report.classList.add('active');
+  // Scroll the founding card into view after render
+  setTimeout(() => {
+    const fc = document.getElementById('foundingCard');
+    if (fc && fc.scrollIntoView) fc.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, 50);
+}
+
+// Entry point: direct-waitlist URL hook OR normal quiz intro
+(function(){
+  var params = new URLSearchParams(window.location.search);
+  if (params.get('waitlist') === '1') {
+    showWaitlistOnly();
+  } else {
+    showIntro();
+  }
+})();
 
 
 // Founding waitlist submit
