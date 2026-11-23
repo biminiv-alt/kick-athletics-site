@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#0B0F17" />
   <title>Game-Day Fuel Plan for Youth Athletes | Free Quiz | Kick Athletics</title>
   <meta name="description" content="Free 2-minute quiz for youth sports parents. Get your athlete's game-day carb, protein and fluid targets for their weight and schedule." />
@@ -884,6 +884,7 @@
 
       <button type="button" class="btn-primary" id="checkoutBtn" onclick="startCheckout()">Unlock Season Pass — $29 →</button>
       <div class="fine-print">Instant access via Stripe • Apple Pay &amp; major cards accepted</div>
+      <div class="fine-print" style="margin-top:6px;">Already bought it on another phone or browser? Email <a href="mailto:hello@kickathletics.com?subject=Restore%20my%20Season%20Pass" style="color:inherit;text-decoration:underline;">hello@kickathletics.com</a> and we'll get you back in.</div>
     </section>
 
     <!-- UNLOCKED DASHBOARD -->
@@ -969,7 +970,8 @@
         <div id="gearContainer"></div>
       </div>
 
-      <div style="text-align:center; margin-top:24px;">
+      <div class="fine-print" style="text-align:center; margin-top:24px;">Your Season Pass is saved in this browser. Bookmark this page to come back to it. Switching phones or browsers? Email <a href="mailto:hello@kickathletics.com?subject=Restore%20my%20Season%20Pass" style="color:inherit;text-decoration:underline;">hello@kickathletics.com</a>.</div>
+      <div style="text-align:center; margin-top:16px;">
         <button type="button" class="reset-link" onclick="editProfile()">Edit Athlete Profile</button>
       </div>
     </section>
@@ -1017,7 +1019,8 @@
       try {
         if (typeof window.gtag === "function" && GA_EVENT_NAMES[eventName]) {
           const gaParams = Object.assign({}, params, { transport_type: "beacon" });
-          if (eventName === "Purchase") gaParams.transaction_id = "kick-" + Date.now() + "-" + Math.floor(Math.random() * 1e6);
+          if (eventName === "Purchase" && !gaParams.transaction_id) gaParams.transaction_id = "kick-" + Date.now() + "-" + Math.floor(Math.random() * 1e6);
+          delete gaParams.event_id;
           if (done) gaParams.event_callback = finish;
           window.gtag("event", GA_EVENT_NAMES[eventName], gaParams);
         }
@@ -1026,7 +1029,10 @@
       if (typeof window.fbq === "function") {
         window.fbq("trackCustom", eventName, params);
         if (eventName === "InitiateCheckout" || eventName === "Purchase") {
-          window.fbq("track", eventName, params);
+          window.fbq("track", eventName, params, params.event_id ? { eventID: params.event_id } : undefined);
+        }
+        if (eventName === "QuizCompleted") {
+          window.fbq("track", "Lead", { content_name: "Fuel quiz" });
         }
       }
     }
@@ -1090,6 +1096,7 @@
     function bindOptionGroup(containerId, stateKey) {
       const container = document.getElementById(containerId);
       container.querySelectorAll(".option-btn").forEach(btn => {
+        if (state[stateKey] && btn.dataset.val === state[stateKey]) btn.classList.add("selected");
         btn.addEventListener("click", () => {
           container.querySelectorAll(".option-btn").forEach(b => b.classList.remove("selected"));
           btn.classList.add("selected");
@@ -1546,10 +1553,13 @@
       const params = new URLSearchParams(window.location.search);
       if (params.get("unlocked") === "true") {
         const firstUnlock = !state.unlocked;
+        const sessionId = params.get("session_id") || "";
         state.unlocked = true;
         saveState();
         if (firstUnlock) {
-          trackEvent("Purchase", { value: 29.00, currency: "USD" });
+          const p = { value: 29.00, currency: "USD" };
+          if (sessionId) { p.transaction_id = sessionId; p.event_id = sessionId; }
+          trackEvent("Purchase", p);
         }
         // Clean URL without reloading
         const cleanUrl = window.location.origin + window.location.pathname;
