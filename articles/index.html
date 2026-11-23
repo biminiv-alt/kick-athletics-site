@@ -2,9 +2,12 @@
 <html lang="en">
 <head>
 <meta charset="utf-8"/>
+<link rel="canonical" href="https://kickathletics.com/articles/"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title>Articles &mdash; Kick Athletics</title>
 <meta name="description" content="Real advice for parents of youth athletes ages 9 to 15. Nutrition, hydration, sleep, recovery, and game routine. No supplements. No shortcuts."/>
+<meta property="og:image" content="https://kickathletics.com/og-image.png"/>
+<meta name="twitter:card" content="summary_large_image"/>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
 <style>
   :root { --bg: #faf6f0; --bg-2: #f2ece2; --ink: #1e2a2a; --ink-soft: #4a5559; --ink-mute: #7a8388; --accent: #c85a3a; --line: #e2d9cc; --card: #ffffff; }
@@ -31,6 +34,12 @@
   .article-card p { font-size: 16px; color: var(--ink-soft); line-height: 1.55; margin-bottom: 12px; }
   .article-card .read { font-size: 13px; color: var(--ink-mute); }
   footer { padding: 48px 0; text-align: center; color: var(--ink-mute); font-size: 13px; background: var(--bg-2); border-top: 1px solid var(--line); }
+  .top-cta { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; background: var(--card); border: 1px solid var(--line); border-left: 4px solid var(--accent); border-radius: 12px; padding: 18px 20px; margin: 0 0 36px; box-shadow: 0 1px 3px rgba(30,42,42,0.06); }
+  .top-cta .tc-text { flex: 1 1 260px; font-size: 15px; line-height: 1.5; color: var(--ink-soft); }
+  .top-cta .tc-text strong { display: block; color: var(--ink); font-size: 16px; margin-bottom: 2px; }
+  .top-cta a { background: var(--accent); color: #fff; padding: 12px 20px; border-radius: 999px; font-weight: 600; font-size: 15px; white-space: nowrap; }
+  .top-cta a:hover { text-decoration: none; opacity: 0.92; }
+  @media (max-width: 520px) { .top-cta a { width: 100%; text-align: center; } .quiz-cta { padding: 36px 22px; } .nav-cta { padding: 9px 14px; font-size: 13px; } }
 </style>
 <script type="application/ld+json">
 {
@@ -54,7 +63,7 @@ fbq('track', 'PageView');
 <header>
   <div class="wrap nav">
     <a href="/"><div class="brand"><div class="brand-mark">K</div>Kick Athletics</div></a>
-    <a href="/quiz/" class="nav-cta">Take the check</a>
+    <a href="/" class="nav-cta" data-cta="nav">Take the free quiz</a>
   </div>
 </header>
 <main>
@@ -62,7 +71,32 @@ fbq('track', 'PageView');
     <div class="kicker">Articles</div>
     <h1>Real advice for parents of <em>youth athletes</em>.</h1>
     <p class="lede">The five factors most families miss. Nutrition, hydration, sleep, recovery, and game routine. No supplements. No shortcuts. No promises about starting minutes. Just the ground game.</p>
+    <div class="top-cta">
+      <div class="tc-text"><strong>What should your athlete eat and drink on game day?</strong>Free 2-minute quiz: carb, protein and fluid targets for their weight and schedule.</div>
+      <a href="/" data-cta="articles_index">Take the free quiz &rarr;</a>
+    </div>
     <div class="article-list">
+
+      <a href="/articles/how-much-water-youth-athlete-game-day/" class="article-card">
+        <div class="cat">Hydration</div>
+        <h2>How much <em>water</em> should a youth athlete drink on game day?</h2>
+        <p>The ounces-per-pound rule, when the fluid should go in, water vs sports drinks, and the easiest check there is.</p>
+        <div class="read">4 min read</div>
+      </a>
+
+      <a href="/articles/how-much-protein-youth-athlete/" class="article-card">
+        <div class="cat">Nutrition</div>
+        <h2>How much <em>protein</em> does a youth athlete actually need?</h2>
+        <p>Daily protein by body weight, real-food examples, and whether your kid needs protein powder (usually not).</p>
+        <div class="read">4 min read</div>
+      </a>
+
+      <a href="/articles/what-to-eat-night-before-game/" class="article-card">
+        <div class="cat">Nutrition</div>
+        <h2>What to eat the <em>night before</em> a game</h2>
+        <p>Normal dinner, slightly more carbs, nothing new. The plate, what to skip, and timing before bed.</p>
+        <div class="read">4 min read</div>
+      </a>
 
       <a href="/articles/five-factors-coaches-dont-talk-about/" class="article-card">
         <div class="cat">The Fundamentals</div>
@@ -128,5 +162,12 @@ fbq('track', 'PageView');
     <p>&copy; 2026 Kick Athletics &middot; hello@kickathletics.com</p>
   </div>
 </footer>
+<script>
+document.addEventListener('click', function (e) {
+  var a = e.target.closest && e.target.closest('a[data-cta]');
+  if (!a || !window.gtag) return;
+  try { gtag('event', 'quiz_cta_click', { cta_position: a.getAttribute('data-cta'), page_path: location.pathname }); } catch (err) {}
+});
+</script>
 </body>
 </html>

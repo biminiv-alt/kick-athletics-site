@@ -4,7 +4,17 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <meta name="theme-color" content="#0B0F17" />
-  <title>Kick Athletics | GameReady Fuel &amp; Tournament System</title>
+  <title>Game-Day Fuel Plan for Youth Athletes | Free Quiz | Kick Athletics</title>
+  <meta name="description" content="Free 2-minute quiz for parents of youth athletes. Get game-day carb, protein and fluid targets for your athlete's weight and schedule, plus a tournament fuel clock, 7-day meals and a cooler list." />
+  <link rel="canonical" href="https://kickathletics.com/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://kickathletics.com/" />
+  <meta property="og:title" content="Game-Day Fuel Plan for Youth Athletes: Free Quiz" />
+  <meta property="og:description" content="Five quick questions. See your athlete's game-day carb, protein and fluid targets for their weight and schedule." />
+  <meta property="og:image" content="https://kickathletics.com/og-image.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-HWE08FHRDH"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-HWE08FHRDH');</script>
   <style>
     :root {
       --bg: #0B0F17;
@@ -652,6 +662,10 @@
       margin-bottom: 12px;
       display: none;
     }
+    .site-guides { max-width: 520px; margin: 8px auto 40px; padding: 0 20px; text-align: center; font-size: 13px; color: var(--muted); line-height: 1.9; }
+    .site-guides strong { display: block; color: var(--text); font-size: 13px; margin-bottom: 4px; letter-spacing: 0.04em; }
+    .site-guides a { color: var(--muted); text-decoration: underline; text-underline-offset: 2px; margin: 0 6px; display: inline-block; }
+    .site-guides a:hover { color: var(--accent); }
   </style>
 </head>
 <body>
@@ -959,6 +973,16 @@
     </section>
   </div>
 
+  <nav class="site-guides" aria-label="Free guides">
+    <strong>Free guides for sports parents</strong>
+    <a href="/articles/game-day-breakfast/">Game-day breakfast</a>
+    <a href="/articles/what-to-eat-night-before-game/">Night-before dinner</a>
+    <a href="/articles/how-much-water-youth-athlete-game-day/">Game-day water</a>
+    <a href="/articles/how-much-protein-youth-athlete/">Protein by weight</a>
+    <a href="/articles/tournament-food-kit/">Tournament food kit</a>
+    <a href="/articles/">All articles</a>
+  </nav>
+
   <script>
     // =========================================================================
     // CONFIGURATION — UPDATE BEFORE DEPLOYING TO KICKATHLETICS.COM
@@ -977,7 +1001,26 @@
       fbq('track', 'PageView');
     }
 
-    function trackEvent(eventName, params = {}) {
+    // Google Analytics event names for each step of the funnel
+    const GA_EVENT_NAMES = {
+      QuizStarted: "quiz_start",
+      QuizCompleted: "paywall_view",
+      InitiateCheckout: "begin_checkout",
+      Purchase: "purchase"
+    };
+
+    function trackEvent(eventName, params = {}, done) {
+      let called = false;
+      const finish = () => { if (!called) { called = true; if (done) done(); } };
+      try {
+        if (typeof window.gtag === "function" && GA_EVENT_NAMES[eventName]) {
+          const gaParams = Object.assign({}, params, { transport_type: "beacon" });
+          if (eventName === "Purchase") gaParams.transaction_id = "kick-" + Date.now() + "-" + Math.floor(Math.random() * 1e6);
+          if (done) gaParams.event_callback = finish;
+          window.gtag("event", GA_EVENT_NAMES[eventName], gaParams);
+        }
+      } catch (e) {}
+      if (done) setTimeout(finish, 900);
       if (typeof window.fbq === "function") {
         window.fbq("trackCustom", eventName, params);
         if (eventName === "InitiateCheckout" || eventName === "Purchase") {
@@ -1088,6 +1131,7 @@
         }
         showErr("err-1", false);
         saveState();
+        trackEvent("QuizStarted", { sport: state.sport });
         goStep(2);
       } else if (current === 2) {
         const ageVal = parseInt(document.getElementById("athleteAge").value, 10);
@@ -1169,12 +1213,13 @@
 
     function startCheckout() {
       saveState();
-      trackEvent("InitiateCheckout", { value: 29.00, currency: "USD" });
       if (PAYMENT_LINK_URL.includes("YOUR_PAYMENT_LINK_HERE")) {
         alert("Stripe Payment Link not configured yet. Update PAYMENT_LINK_URL in index.html with your live Stripe link.");
         return;
       }
-      window.location.href = PAYMENT_LINK_URL;
+      trackEvent("InitiateCheckout", { value: 29.00, currency: "USD" }, () => {
+        window.location.href = PAYMENT_LINK_URL;
+      });
     }
 
     // =========================================================================
