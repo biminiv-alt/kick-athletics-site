@@ -885,6 +885,7 @@
       <button type="button" class="btn-primary" id="checkoutBtn" onclick="startCheckout()">Unlock Season Pass — $29 →</button>
       <div class="fine-print">Instant access via Stripe • Apple Pay &amp; major cards accepted</div>
       <div class="fine-print" style="margin-top:6px;">Already bought it on another phone or browser? Email <a href="mailto:hello@kickathletics.com?subject=Restore%20my%20Season%20Pass" style="color:inherit;text-decoration:underline;">hello@kickathletics.com</a> and we'll get you back in.</div>
+      <div class="fine-print" style="margin-top:14px;">Not ready yet? <a href="#fuel-plan" style="color:var(--accent);text-decoration:underline;" onclick="if(window.gtag)gtag('event','fuel_plan_link_click',{place:'paywall'})">Get the free Tournament Day Fuel Plan</a> first.</div>
     </section>
 
     <!-- UNLOCKED DASHBOARD -->
@@ -977,6 +978,8 @@
     </section>
   </div>
 
+  <div style="max-width:480px;margin:0 auto;padding:0 18px;"><div data-fuel-signup data-place="home" data-theme="dark"></div></div>
+
   <nav class="site-guides" aria-label="Free guides">
     <strong>Free guides for sports parents</strong>
     <a href="/team-snack-sheet/">Free team snack sheet</a>
@@ -985,6 +988,7 @@
     <a href="/articles/how-much-water-youth-athlete-game-day/">Game-day water</a>
     <a href="/articles/how-much-protein-youth-athlete/">Protein by weight</a>
     <a href="/articles/tournament-food-kit/">Tournament food kit</a>
+    <a href="/tournament-day-fuel-plan/">Free Tournament Day Fuel Plan</a>
     <a href="/articles/">All articles</a>
   </nav>
 
@@ -1575,5 +1579,6 @@
       }
     })();
   </script>
+<script src="/fuel-signup.js" defer></script>
 </body>
 </html>
