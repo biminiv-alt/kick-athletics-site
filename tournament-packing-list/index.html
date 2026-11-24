@@ -452,30 +452,30 @@ fbq('track', 'PageView');
     var carbs = q((Math.max(1, shortGaps) + 1) * kids + 1);
     food.push([carbs, 'quick carbs: small pretzel bags, nut-free granola bars, fig bars or crackers']);
     if (gaps > 0 && gap < 45) food.push([q(gaps * kids), 'applesauce or fruit pouches for the short gaps']);
-    if (gap >= 60 && gaps > 0) food.push([q(Math.min(gaps, 2) * kids), 'plain bagels or bread rolls']);
+    if (gap >= 60 && gap < 120 && gaps > 0) food.push([q(Math.min(gaps, 2) * kids), 'plain bagels or bread rolls']);
     if (longGaps > 0) food.push([q(Math.min(longGaps, 2) * kids), 'turkey or ham sandwiches or wraps, on ice']);
     food.push([q((longGaps > 0 ? 2 : 1) * kids), 'cheese sticks or yogurt tubes, on ice']);
     food.push([q(kids), 'chocolate milks (8 oz), on ice, for after the last game']);
     if (games >= 3 || hot) food.push([1, 'bag of salty pretzels or crackers to share, for the salt']);
 
     var gear = [];
-    gear.push([1, 'cooler with ' + (games >= 3 || hot ? '2 to 3' : '1 to 2') + ' ice packs']);
-    gear.push([1, 'zip bag of wipes and hand sanitizer']);
-    gear.push([1, 'trash bag']);
-    gear.push([1, 'roll of paper towels or napkins']);
-    if (o.wx !== 'in') { gear.push([1, 'sunscreen and a hat']); gear.push([1, 'folding chair or blanket']); }
-    if (hot) gear.push([1, 'wet towel or cooling towel, in the cooler']);
-    if (o.wx === 'in' || o.sport === 'hockey' || o.sport === 'swim') gear.push([1, 'warm layer for between games']);
-    if (o.sport === 'swim') gear.push([1, 'extra dry towel and a change of clothes']);
-    gear.push([1, 'phone charger or battery pack']);
-    gear.push([1, 'spare socks and a change of shirt']);
+    gear.push([1, 'Cooler with ' + (games >= 3 || hot ? '2 to 3' : '1 to 2') + ' ice packs']);
+    gear.push([1, 'Zip bag of wipes and hand sanitizer']);
+    gear.push([1, 'Trash bag']);
+    gear.push([1, 'Roll of paper towels or napkins']);
+    if (o.wx !== 'in') { gear.push([1, 'Sunscreen and a hat']); gear.push([1, 'Folding chair or blanket']); }
+    if (hot) gear.push([1, 'Wet towel or cooling towel, in the cooler']);
+    if (o.wx === 'in' || o.sport === 'hockey' || o.sport === 'swim') gear.push([1, 'Warm layer for between games']);
+    if (o.sport === 'swim') gear.push([1, 'Extra dry towel and a change of clothes']);
+    gear.push([1, 'Phone charger or battery pack']);
+    gear.push([1, 'Spare socks and a change of shirt']);
     return { timeline: timeline, food: food, gear: gear, s: s, o: o, waterBottles: waterBottles };
   }
 
   function li(items, prefix) {
     return items.map(function (it, i) {
       var id = prefix + i;
-      return '<li><input type="checkbox" id="' + id + '"/><label for="' + id + '"><span class="qty">' + it[0] + '</span> ' + esc(it[1]) + '</label></li>';
+      return '<li><input type="checkbox" id="' + id + '"/><label for="' + id + '"><span class="qty">' + (prefix === 'g' ? '' : it[0] + ' ') + '</span>' + esc(it[1]) + '</label></li>';
     }).join('');
   }
 
