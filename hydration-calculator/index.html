@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<link rel="canonical" href="https://kickathletics.com/hydration-calculator/"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Youth Athlete Hydration Calculator: How Much Water? | Kick Athletics</title>
+<meta name="description" content="Free hydration calculator for youth athletes. Enter weight, sport, game length and weather to see how much your kid should drink before, during and after a game."/>
+<meta property="og:title" content="How much should your athlete drink on game day?"/>
+<meta property="og:description" content="Free calculator: enter weight, sport, game length and weather. Get ounces for before, during and after the game."/>
+<meta property="og:type" content="website"/>
+<meta property="og:url" content="https://kickathletics.com/hydration-calculator/"/>
+<meta property="og:image" content="https://kickathletics.com/hydration-calculator/og.png"/>
+<meta property="og:image:width" content="1200"/>
+<meta property="og:image:height" content="630"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://kickathletics.com/hydration-calculator/og.png"/>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<script type="application/ld+json">
+[
+ {
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Youth Athlete Hydration Calculator",
+  "url": "https://kickathletics.com/hydration-calculator/",
+  "description": "Free hydration calculator for youth athletes. Enter weight, sport, game length and weather to see how much your kid should drink before, during and after a game.",
+  "applicationCategory": "HealthApplication",
+  "operatingSystem": "Any",
+  "isAccessibleForFree": true,
+  "offers": {
+   "@type": "Offer",
+   "price": "0",
+   "priceCurrency": "USD"
+  },
+  "publisher": {
+   "@type": "Organization",
+   "name": "Kick Athletics",
+   "url": "https://kickathletics.com/",
+   "logo": {
+    "@type": "ImageObject",
+    "url": "https://kickathletics.com/kick-mark.png"
+   }
+  },
+  "datePublished": "2026-11-24",
+  "dateModified": "2026-11-24"
+ },
+ {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+   {
+    "@type": "Question",
+    "name": "How much water should a youth athlete drink on game day?",
+    "acceptedAnswer": {
+     "@type": "Answer",
+     "text": "A common rule of thumb is about two-thirds of an ounce of fluid per pound of body weight across the whole day, and closer to three-quarters of an ounce per pound on hot days or tournament days. An 80 lb athlete needs roughly 52 to 60 oz, a 120 lb athlete roughly 78 to 90 oz. Food counts toward some of it."
+    }
+   },
+   {
+    "@type": "Question",
+    "name": "How much should kids drink during a game?",
+    "acceptedAnswer": {
+     "@type": "Answer",
+     "text": "Widely published guidance for active kids is a few big sips every 15 to 20 minutes of play. For younger kids that is roughly 3 to 8 oz every 20 minutes, and teens may need more on hot days. Sipping on a schedule works better than waiting until they are thirsty."
+    }
+   },
+   {
+    "@type": "Question",
+    "name": "When should my child drink before a game?",
+    "acceptedAnswer": {
+     "@type": "Answer",
+     "text": "Finish a bottle of water (about 8 to 16 oz depending on size) about 2 hours before the game so there is time for a bathroom stop, then have a few more sips (4 to 8 oz) 15 to 20 minutes before warmups. Avoid chugging a full bottle right before the whistle."
+    }
+   },
+   {
+    "@type": "Question",
+    "name": "Does my kid need a sports drink?",
+    "acceptedAnswer": {
+     "@type": "Answer",
+     "text": "For a single game of about an hour, water is enough for most kids. A sports drink starts to help for games or practices longer than about an hour, in heat where they are soaked in sweat, or across a multi-game tournament day."
+    }
+   }
+  ]
+ }
+]
+</script>
+<style>
+  :root {
+    --bg: #faf6f0; --bg-2: #f2ece2; --ink: #1e2a2a; --ink-soft: #4a5559; --ink-mute: #7a8388;
+    --accent: #c85a3a; --accent-soft: #e8b19a; --tint: #fbf3ec; --line: #e2d9cc; --card: #ffffff;
+  }
+  *,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--ink); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .wrap { width: 100%; max-width: 820px; margin: 0 auto; padding: 0 20px; }
+  header { padding: 20px 0; border-bottom: 1px solid var(--line); background: rgba(250,246,240,0.92); backdrop-filter: blur(10px); position: sticky; top: 0; z-index: 10; }
+  .nav { display: flex; align-items: center; justify-content: space-between; max-width: 1080px; margin: 0 auto; padding: 0 20px; gap: 12px; }
+  .brand { font-family: 'Fraunces', serif; font-weight: 500; font-size: 20px; display: flex; align-items: center; gap: 12px; color: var(--ink); }
+  .brand-mark { width: 30px; height: 30px; border-radius: 8px; background: var(--accent); display: grid; place-items: center; color: #fff; font-family: 'Fraunces', serif; font-weight: 500; font-size: 17px; }
+  .nav-cta { background: var(--ink); color: var(--bg); padding: 10px 18px; border-radius: 999px; font-weight: 500; font-size: 14px; white-space: nowrap; }
+  .nav-cta:hover { text-decoration: none; }
+  main { padding: 40px 0 72px; }
+  .kicker { font-size: 12px; letter-spacing: 3px; text-transform: uppercase; color: var(--accent); font-weight: 600; margin-bottom: 14px; }
+  h1 { font-family: 'Fraunces', serif; font-weight: 400; font-size: clamp(32px, 6vw, 50px); line-height: 1.08; letter-spacing: -0.02em; margin-bottom: 16px; }
+  h1 em { font-style: italic; color: var(--accent); }
+  .lede { font-size: 18px; color: var(--ink-soft); margin-bottom: 26px; max-width: 640px; }
+
+  .tool { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 24px; box-shadow: 0 1px 3px rgba(30,42,42,0.06); margin-bottom: 28px; }
+  .tool h2 { font-family: 'Fraunces', serif; font-weight: 500; font-size: 22px; margin-bottom: 14px; }
+  .field { margin-bottom: 18px; }
+  .field > label, .field > .flabel { display: block; font-weight: 600; font-size: 15px; margin-bottom: 8px; }
+  .field .hint { font-weight: 400; color: var(--ink-mute); font-size: 13px; }
+  .row { display: flex; gap: 10px; align-items: stretch; }
+  input[type=number], select { width: 100%; font: 17px 'Inter', system-ui, sans-serif; padding: 13px 14px; border-radius: 12px; border: 1px solid var(--line); background: var(--bg); color: var(--ink); min-height: 50px; }
+  select { appearance: none; -webkit-appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%234a5559' stroke-width='2'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; padding-right: 38px; }
+  input:focus, select:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+  .unit { display: flex; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; flex: none; }
+  .unit button { font: 600 15px 'Inter', system-ui, sans-serif; padding: 0 16px; border: 0; background: var(--bg); color: var(--ink-soft); cursor: pointer; min-height: 50px; }
+  .unit button.on { background: var(--ink); color: var(--bg); }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chips button { font: 600 15px 'Inter', system-ui, sans-serif; padding: 11px 15px; border-radius: 999px; border: 1px solid var(--line); background: var(--bg); color: var(--ink); cursor: pointer; min-height: 44px; }
+  .chips button.on { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .go-btn { display: flex; width: 100%; align-items: center; justify-content: center; min-height: 54px; border-radius: 12px; border: 0; background: var(--accent); color: #fff; font: 700 17px 'Inter', system-ui, sans-serif; cursor: pointer; margin-top: 6px; }
+  .err { color: #b33a22; font-size: 14px; margin-top: 8px; display: none; }
+
+  .result { display: none; }
+  .result.show { display: block; }
+  .result .rule { background: var(--ink); color: #fff; border-radius: 14px; padding: 20px 22px; margin-bottom: 14px; }
+  .result .rule .label { font-size: 12px; letter-spacing: 2px; text-transform: uppercase; color: var(--accent-soft); font-weight: 700; margin-bottom: 6px; }
+  .result .rule .big { font-family: 'Fraunces', serif; font-size: 40px; line-height: 1.1; font-weight: 500; }
+  .result .rule p { font-size: 16px; color: rgba(255,255,255,0.82); margin-top: 6px; }
+  .steps4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 14px; }
+  .step { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 16px 14px; }
+  .step .label { font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--accent); font-weight: 700; margin-bottom: 4px; }
+  .step .num { font-family: 'Fraunces', serif; font-size: 26px; font-weight: 500; line-height: 1.15; }
+  .step .sub { font-size: 14px; color: var(--ink-soft); margin-top: 4px; line-height: 1.4; }
+  .panel { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 18px 20px 10px; margin-bottom: 12px; }
+  .panel.tint { background: var(--tint); border-color: #efd5c6; }
+  .panel .label { font-size: 12px; letter-spacing: 2px; text-transform: uppercase; color: var(--accent); font-weight: 700; margin-bottom: 8px; }
+  .panel ul { margin: 0 0 8px 18px; }
+  .panel li { font-size: 16px; margin-bottom: 7px; line-height: 1.45; }
+  .panel p { font-size: 16px; margin-bottom: 10px; }
+  .timeline { list-style: none; margin: 0 !important; padding: 0; }
+  .timeline li { display: grid; grid-template-columns: 118px 1fr; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--line); margin: 0 !important; }
+  .timeline li:last-child { border-bottom: 0; }
+  .timeline .when { font-weight: 700; font-size: 14px; color: var(--accent); text-transform: uppercase; letter-spacing: 1px; padding-top: 2px; }
+  .timeline .what strong { display: block; font-size: 16px; }
+  .timeline .what span { display: block; font-size: 15px; color: var(--ink-soft); }
+  .checklist { list-style: none; margin: 0 !important; columns: 2; column-gap: 24px; }
+  .checklist li { break-inside: avoid; display: flex; gap: 10px; align-items: flex-start; padding: 7px 0; margin: 0 !important; }
+  .checklist input { width: 20px; height: 20px; flex: none; margin-top: 2px; accent-color: var(--accent); }
+  .checklist label { font-size: 16px; line-height: 1.4; }
+  .checklist .qty { font-weight: 700; }
+  .warn { font-size: 14px; color: var(--ink-soft); background: var(--bg-2); border-radius: 10px; padding: 12px 14px; margin: 10px 0 6px; }
+
+  .sharebox { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 20px; margin: 18px 0 10px; }
+  .sharebox h3 { font-family: 'Fraunces', serif; font-weight: 500; font-size: 20px; margin-bottom: 4px; }
+  .sharebox p { font-size: 15px; color: var(--ink-soft); margin-bottom: 14px; }
+  .btns { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .btn { display: flex; align-items: center; justify-content: center; gap: 8px; min-height: 48px; padding: 12px 14px; border-radius: 12px; border: 1px solid var(--line); background: var(--bg); color: var(--ink); font: 600 15px 'Inter', system-ui, sans-serif; cursor: pointer; text-align: center; }
+  .btn:hover { text-decoration: none; border-color: var(--accent-soft); }
+  .btn.dark { background: var(--ink); border-color: var(--ink); color: var(--bg); grid-column: 1 / -1; }
+  .btn svg { width: 18px; height: 18px; flex: none; }
+  .toast { position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%) translateY(20px); background: var(--ink); color: var(--bg); padding: 12px 18px; border-radius: 999px; font-size: 14px; font-weight: 500; opacity: 0; transition: all .2s; pointer-events: none; z-index: 50; }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+  .explain h2 { font-family: 'Fraunces', serif; font-weight: 500; font-size: 28px; line-height: 1.2; margin: 44px 0 14px; }
+  .explain h2 em { font-style: italic; color: var(--accent); }
+  .explain p { font-size: 17px; margin-bottom: 16px; }
+  .explain ul { margin: 0 0 16px 20px; }
+  .explain li { font-size: 17px; margin-bottom: 8px; }
+  .note-box { font-size: 14px; color: var(--ink-mute); border-top: 1px solid var(--line); padding-top: 14px; margin-top: 24px; }
+
+  .quiz-cta { background: var(--ink); color: var(--bg); border-radius: 16px; padding: 32px 28px; margin: 40px 0 8px; }
+  .quiz-cta h3 { font-family: 'Fraunces', serif; font-weight: 400; font-size: 28px; line-height: 1.2; margin-bottom: 10px; }
+  .quiz-cta h3 em { font-style: italic; color: var(--accent-soft); }
+  .quiz-cta p { color: rgba(250,246,240,0.78); font-size: 16px; margin-bottom: 20px; }
+  .quiz-cta a.go { background: var(--accent); color: #fff; padding: 14px 26px; border-radius: 999px; font-weight: 600; font-size: 16px; display: inline-block; }
+  .quiz-cta a.go:hover { text-decoration: none; }
+  .keep-reading { margin: 8px 0 0; padding-top: 24px; border-top: 1px solid var(--line); }
+  .keep-reading .label { font-size: 12px; letter-spacing: 2px; text-transform: uppercase; color: var(--accent); font-weight: 600; margin-bottom: 10px; }
+  .keep-reading ul { list-style: none; }
+  .keep-reading li { font-size: 17px; padding: 10px 0; border-bottom: 1px solid var(--line); }
+  footer { padding: 44px 0; text-align: center; color: var(--ink-mute); font-size: 13px; background: var(--bg-2); border-top: 1px solid var(--line); }
+  footer .disclaimer { max-width: 640px; margin: 0 auto 14px; line-height: 1.55; }
+  .print-only { display: none; }
+
+  @media (max-width: 680px) {
+    .tool { padding: 18px; }
+    .steps4 { grid-template-columns: 1fr 1fr; }
+    .checklist { columns: 1; }
+    .timeline li { grid-template-columns: 92px 1fr; }
+    .quiz-cta { padding: 28px 20px; text-align: center; }
+    .nav-cta { padding: 9px 14px; font-size: 13px; }
+  }
+  @media (max-width: 380px) { .btns { grid-template-columns: 1fr; } .brand { font-size: 18px; } .result .rule .big { font-size: 32px; } }
+
+  @media print {
+    @page { margin: 0.5in; }
+    body { background: #fff; font-size: 11pt; }
+    header, footer, .tool, .sharebox, .keep-reading, .explain, .quiz-cta a.go, .no-print, .toast, [data-fuel-signup], .lede { display: none !important; }
+    .print-only { display: block; }
+    main { padding: 0; }
+    h1 { font-size: 22pt; margin-bottom: 8pt; }
+    .result .rule, .step, .panel { -webkit-print-color-adjust: exact; print-color-adjust: exact; break-inside: avoid; }
+    .result .rule .big { font-size: 24pt; }
+    .steps4 { grid-template-columns: repeat(4, 1fr); }
+    .panel li, .checklist label, .timeline .what span { font-size: 10pt; }
+    .checklist { columns: 2; }
+    .quiz-cta { -webkit-print-color-adjust: exact; print-color-adjust: exact; padding: 12pt; margin-top: 12pt; }
+    .quiz-cta h3 { font-size: 14pt; }
+    .quiz-cta p { font-size: 10pt; margin: 0; }
+  }
+</style>
+<script>
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1039362762480125');
+fbq('track', 'PageView');
+</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-HWE08FHRDH"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-HWE08FHRDH');</script>
+<link rel="icon" type="image/png" href="/favicon.png"/>
+<link rel="apple-touch-icon" href="/apple-touch-icon.png"/>
+</head>
+
+<body>
+<header>
+  <div class="nav">
+    <a href="/" style="text-decoration:none;"><div class="brand"><div class="brand-mark">K</div>Kick Athletics</div></a>
+    <a href="/" class="nav-cta" data-cta="nav">Take the free quiz</a>
+  </div>
+</header>
+<main>
+  <div class="wrap">
+
+    <div class="kicker">Free calculator</div>
+    <h1>How much should your athlete <em>drink</em> on game day?</h1>
+    <p class="lede">Enter your athlete's weight, sport, game length and the weather. You'll get ounces for before, during and after the game, plus when a sports drink actually helps. Free, no email needed.</p>
+
+    <section class="tool" aria-label="Hydration calculator">
+      <form id="hForm" novalidate>
+        <div class="field">
+          <label for="w">Athlete's weight</label>
+          <div class="row">
+            <input type="number" id="w" inputmode="decimal" min="30" max="300" step="1" placeholder="e.g. 95" aria-describedby="wErr"/>
+            <div class="unit" role="group" aria-label="Weight unit"><button type="button" class="on" data-u="lb" aria-pressed="true">lb</button><button type="button" data-u="kg" aria-pressed="false">kg</button></div>
+          </div>
+          <div class="err" id="wErr">Enter a weight between 40 and 300 lb (18 to 136 kg).</div>
+        </div>
+        <div class="field">
+          <label for="sport">Sport</label>
+          <select id="sport"><option value="soccer">Soccer</option><option value="basketball">Basketball</option><option value="lacrosse">Lacrosse</option><option value="hockey">Hockey</option><option value="football">Football</option><option value="volleyball">Volleyball</option><option value="baseball">Baseball / softball</option><option value="swim">Swimming</option><option value="track">Track / cross country</option><option value="tennis">Tennis</option><option value="wrestling">Wrestling</option><option value="gymnastics">Gymnastics / cheer / dance</option><option value="other">Other</option></select>
+        </div>
+        <div class="field">
+          <span class="flabel">Game or practice length</span>
+          <div class="chips" id="len" role="group"><button type="button" data-v="30" aria-pressed="false">30 min</button><button type="button" data-v="45" aria-pressed="false">45 min</button><button type="button" data-v="60" class="on" aria-pressed="true">1 hour</button><button type="button" data-v="90" aria-pressed="false">90 min</button><button type="button" data-v="120" aria-pressed="false">2 hours</button></div>
+        </div>
+        <div class="field">
+          <span class="flabel">Conditions</span>
+          <div class="chips" id="heat" role="group"><button type="button" data-v="cool" aria-pressed="false">Cool or indoors</button><button type="button" data-v="mild" class="on" aria-pressed="true">Mild (60s to 70s)</button><button type="button" data-v="warm" aria-pressed="false">Warm (80s)</button><button type="button" data-v="hot" aria-pressed="false">Hot or humid (90+)</button></div>
+        </div>
+        <button type="submit" class="go-btn">Show my athlete's water plan</button>
+      </form>
+    </section>
+
+    <section class="result" id="hResult" aria-live="polite">
+      <h1 class="print-only" style="font-size:20pt;">Game-day water plan</h1>
+      <div class="rule">
+        <div class="label" id="rLabel">Total fluid for game day</div>
+        <div class="big" id="rTotal"></div>
+        <p id="rTotalSub"></p>
+      </div>
+      <div class="steps4">
+        <div class="step"><div class="label">2 hours before</div><div class="num" id="rB2"></div><div class="sub">Finish it, then a bathroom stop before warmups</div></div>
+        <div class="step"><div class="label">15 min before</div><div class="num" id="rB15"></div><div class="sub">A few sips, not a full bottle</div></div>
+        <div class="step"><div class="label">During</div><div class="num" id="rDur"></div><div class="sub" id="rDurSub"></div></div>
+        <div class="step"><div class="label">First hour after</div><div class="num" id="rAft"></div><div class="sub">With real food</div></div>
+      </div>
+      <div class="panel tint">
+        <div class="label">Water or sports drink?</div>
+        <p id="rDrink"></p>
+      </div>
+      <div class="panel">
+        <div class="label">Pack this</div>
+        <ul id="rPack"></ul>
+      </div>
+      <div class="panel">
+        <div class="label">The easy check</div>
+        <ul>
+          <li>Pale yellow pee on game morning means they are on track. Dark yellow means they are behind, so start sipping now.</li>
+          <li>Fill a marked bottle the night before. If most of it isn't gone by warmups, they are behind.</li>
+          <li>Thirst, a headache or feeling "foggy" in the second half are early signs they need more.</li>
+        </ul>
+        <p class="warn">Dizziness, confusion, vomiting, or a kid who stops sweating in the heat: stop play, cool them down and get medical help right away. Don't try to fix that with more water.</p>
+      </div>
+      
+    <div class="sharebox no-print" id="shareBox">
+      <h3>Send it to the team</h3>
+      <p>Text this plan to the team chat or print it for the cooler. The link opens with your athlete's numbers already filled in.</p>
+      <div class="btns">
+        <button type="button" class="btn dark" id="nativeShare" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12v7a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-7"/><path d="M16 6l-4-4-4 4"/><path d="M12 2v13"/></svg> Share this plan</button>
+        <a class="btn" id="smsShare" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg> Text it</a>
+        <button type="button" class="btn" id="copyLink"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.7 1.7"/><path d="M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7l1.7-1.7"/></svg> Copy link</button>
+        <a class="btn" id="emailShare" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg> Email it</a>
+        <button type="button" class="btn" id="printPage"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg> Print</button>
+      </div>
+    </div>
+
+    </section>
+
+    <div class="explain">
+      <h2>How the calculator <em>works</em></h2>
+      <p>The numbers come from widely published guidance for healthy, active kids, rounded to amounts you can actually measure with a water bottle. They are conservative on purpose.</p>
+      <ul>
+        <li><strong>Whole day:</strong> about two-thirds of an ounce of fluid per pound of body weight, and about three-quarters of an ounce per pound when it's hot or the game runs long. Milk, fruit, soup and yogurt count toward it.</li>
+        <li><strong>Before:</strong> most of the drinking should happen before the game. A bottle about 2 hours ahead, then a few sips before warmups.</li>
+        <li><strong>During:</strong> a few big sips every 15 to 20 minutes of hard play. Bigger kids, harder sports and hotter days sit at the top of the range.</li>
+        <li><strong>After:</strong> refill the bottle and finish it in the first hour, alongside a real snack or meal.</li>
+      </ul>
+      <p>If you want to be exact, weigh your athlete before and after a hard practice. Each pound lost is roughly 16 to 24 oz of fluid to replace over the next couple of hours.</p>
+
+      <h2>Common <em>questions</em></h2>
+      <p><strong>Can kids drink too much water?</strong> It's rare, but yes. Drinking far more than they sweat, especially plain water over a long, hot day, can lower the salt in their blood. That's why the plan has a top limit, and why salty snacks and a sports drink matter on long tournament days. If pee is clear all day, ease off.</p>
+      <p><strong>What about cramps?</strong> Late-game cramping is often more about salt than water. Read <a href="/articles/cramping-electrolyte-gap/">why cramping is a sodium gap</a>.</p>
+      <p><strong>Energy drinks?</strong> No. Caffeine and energy drinks aren't recommended for kids and teens, before games or any other time.</p>
+      <p class="note-box">General guidance for healthy kids, not medical advice. Every athlete sweats differently. If your child has a medical condition, a heart or kidney concern, or takes medication, ask their pediatrician what's right for them.</p>
+    </div>
+
+    <div class="quiz-cta">
+      <h3>Water is one number. <em>Food</em> is the other two.</h3>
+      <p>The free 2-minute quiz builds your athlete's carb, protein and fluid targets together, from their sport, age, weight and schedule.</p>
+      <a class="go" href="/?utm_source=hydration_calculator&amp;utm_medium=tool&amp;utm_campaign=hydration_calculator" data-cta="hydration_calculator_end">Take the free quiz</a>
+      <p class="print-only" style="margin-top:6pt;">Free 2-minute quiz at kickathletics.com</p>
+    </div>
+
+    <div data-fuel-signup data-place="hydration_calculator"></div>
+
+    <div class="keep-reading"><div class="label">Keep reading</div><ul><li><a href="/articles/how-much-water-youth-athlete-game-day/">How much water on game day (the full guide)</a></li><li><a href="/articles/sports-drink-vs-water-youth-athletes/">Sports drink or water?</a></li><li><a href="/articles/hot-weather-games-youth-athletes/">Fueling for hot weather games</a></li><li><a href="/tournament-packing-list/">Free tournament day packing list and cooler planner</a></li><li><a href="/articles/cramping-electrolyte-gap/">Cramping is a sodium gap, not just water</a></li></ul></div>
+  </div>
+</main>
+<footer>
+  <div class="wrap">
+    <p class="disclaimer">General guidance for healthy kids, not medical or nutrition advice. Every child is different. If your athlete has a medical condition, a heart or kidney concern, a food allergy, or takes medication, follow their pediatrician's guidance.</p>
+    <p>© 2026 Kick Athletics  ·  <a href="mailto:hello@kickathletics.com" style="color:var(--ink-soft);">hello@kickathletics.com</a></p>
+  </div>
+</footer>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script>
+(function () {
+  var BASE = 'https://kickathletics.com/hydration-calculator/';
+  var CAMPAIGN = 'hydration_calculator';
+  var SUBJECT = 'Game-day water plan';
+  var SPORTS = {"soccer": {"name": "Soccer", "i": "high", "w": "out"}, "basketball": {"name": "Basketball", "i": "high", "w": "in"}, "lacrosse": {"name": "Lacrosse", "i": "high", "w": "out"}, "hockey": {"name": "Hockey", "i": "high", "w": "in"}, "football": {"name": "Football", "i": "high", "w": "out"}, "volleyball": {"name": "Volleyball", "i": "mod", "w": "in"}, "baseball": {"name": "Baseball / softball", "i": "low", "w": "out"}, "swim": {"name": "Swimming", "i": "mod", "w": "in"}, "track": {"name": "Track / cross country", "i": "high", "w": "out"}, "tennis": {"name": "Tennis", "i": "high", "w": "out"}, "wrestling": {"name": "Wrestling", "i": "high", "w": "in"}, "gymnastics": {"name": "Gymnastics / cheer / dance", "i": "mod", "w": "in"}, "other": {"name": "Other", "i": "mod", "w": "out"}};
+  var unit = 'lb', last = null;
+
+  // ---- shared: share / print / tracking ----
+  function track(name, params) {
+    params = params || {}; params.page_path = location.pathname;
+    try { if (window.gtag) gtag('event', name, params); } catch (e) {}
+    try { if (window.fbq) fbq('trackCustom', name, params); } catch (e) {}
+  }
+  function toast(t) { var el = document.getElementById('toast'); el.textContent = t; el.classList.add('show'); setTimeout(function () { el.classList.remove('show'); }, 2200); }
+  function fallbackCopy(text) {
+    var ta = document.createElement('textarea'); ta.value = text; ta.setAttribute('readonly', ''); ta.style.position = 'fixed'; ta.style.opacity = '0';
+    document.body.appendChild(ta); ta.select(); try { document.execCommand('copy'); } catch (e) {} document.body.removeChild(ta);
+  }
+  function shareUrl(medium) {
+    var q = currentQuery();
+    return BASE + '?' + (q ? q + '&' : '') + 'utm_source=share&utm_medium=' + medium + '&utm_campaign=' + CAMPAIGN;
+  }
+  function wireShare() {
+    var sms = document.getElementById('smsShare');
+    sms.addEventListener('click', function () { sms.href = 'sms:?&body=' + encodeURIComponent(shareMsg() + ' ' + shareUrl('sms')); track(CAMPAIGN + '_share', { method: 'sms' }); });
+    var em = document.getElementById('emailShare');
+    em.addEventListener('click', function () { em.href = 'mailto:?subject=' + encodeURIComponent(SUBJECT) + '&body=' + encodeURIComponent(shareMsg() + '\n\n' + shareUrl('email') + '\n'); track(CAMPAIGN + '_share', { method: 'email' }); });
+    var ns = document.getElementById('nativeShare');
+    if (navigator.share) {
+      ns.hidden = false;
+      ns.addEventListener('click', function () {
+        navigator.share({ title: SUBJECT, text: shareMsg(), url: shareUrl('native') })
+          .then(function () { track(CAMPAIGN + '_share', { method: 'native' }); }).catch(function () {});
+      });
+    }
+    document.getElementById('copyLink').addEventListener('click', function () {
+      var url = shareUrl('copy');
+      function done() { toast('Link copied. Paste it in your team chat.'); track(CAMPAIGN + '_share', { method: 'copy' }); }
+      if (navigator.clipboard && window.isSecureContext) { navigator.clipboard.writeText(url).then(done, function () { fallbackCopy(url); done(); }); }
+      else { fallbackCopy(url); done(); }
+    });
+    document.getElementById('printPage').addEventListener('click', function () { track(CAMPAIGN + '_print', {}); window.print(); });
+    document.addEventListener('click', function (e) {
+      var c = e.target.closest && e.target.closest('a[data-cta]');
+      if (c && window.gtag) { try { gtag('event', 'quiz_cta_click', { cta_position: c.getAttribute('data-cta'), page_path: location.pathname }); } catch (err) {} }
+    });
+  }
+  function chips(id, onChange) {
+    var box = document.getElementById(id);
+    box.addEventListener('click', function (e) {
+      var b = e.target.closest('button'); if (!b) return;
+      [].forEach.call(box.querySelectorAll('button'), function (x) { x.classList.remove('on'); x.setAttribute('aria-pressed', 'false'); });
+      b.classList.add('on'); b.setAttribute('aria-pressed', 'true');
+      if (onChange) onChange(b.getAttribute('data-v'));
+    });
+  }
+  function chipVal(id) { var b = document.querySelector('#' + id + ' button.on'); return b ? b.getAttribute('data-v') : null; }
+  function setChip(id, v) {
+    var box = document.getElementById(id); var hit = box.querySelector('button[data-v="' + v + '"]');
+    if (!hit) return false;
+    [].forEach.call(box.querySelectorAll('button'), function (x) { x.classList.remove('on'); x.setAttribute('aria-pressed', 'false'); });
+    hit.classList.add('on'); hit.setAttribute('aria-pressed', 'true'); return true;
+  }
+  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+
+  var unitBox = document.querySelector('.unit');
+  unitBox.addEventListener('click', function (e) {
+    var b = e.target.closest('button'); if (!b) return;
+    var w = document.getElementById('w'), v = parseFloat(w.value), nu = b.getAttribute('data-u');
+    if (nu === unit) return;
+    if (v) w.value = nu === 'kg' ? Math.round(v / 2.2046) : Math.round(v * 2.2046);
+    unit = nu;
+    [].forEach.call(unitBox.querySelectorAll('button'), function (x) { var on = x.getAttribute('data-u') === unit; x.classList.toggle('on', on); x.setAttribute('aria-pressed', on ? 'true' : 'false'); });
+  });
+  chips('len'); chips('heat');
+  // Outdoor sports default to mild; indoor sports default to cool when sport changes and user hasn't chosen.
+  var heatTouched = false;
+  document.getElementById('heat').addEventListener('click', function () { heatTouched = true; });
+  document.getElementById('sport').addEventListener('change', function () {
+    if (!heatTouched) setChip('heat', SPORTS[this.value].w === 'in' ? 'cool' : 'mild');
+  });
+
+  function clamp(x, a, b) { return Math.max(a, Math.min(b, x)); }
+  function r(x) { return Math.round(x); }
+  function oz(x) { return r(x) + ' oz'; }
+  function ml(x) { return Math.round(x * 29.57 / 10) * 10; }
+  function both(x) { return unit === 'kg' ? ml(x) + ' ml' : oz(x); }
+
+  function calc(lb, sport, mins, heat) {
+    var s = SPORTS[sport] || SPORTS.other;
+    var I = { low: 0.85, mod: 1.0, high: 1.15 }[s.i];
+    var H = { cool: 0.85, mild: 1.0, warm: 1.15, hot: 1.3 }[heat];
+    var per20 = clamp(lb * 0.05 * I * H, 3, 12);                // oz every 20 min of play
+    var during = per20 * (mins / 20);
+    var b2 = clamp(lb * 0.12, 8, 20);                          // ~2 h before
+    var b15 = clamp(lb * 0.05, 4, 8);                          // 15-20 min before
+    var aft = clamp(lb * 0.15 * (H > 1 ? 1.1 : 1), 12, 28);    // first hour after
+    var dayRate = (heat === 'warm' || heat === 'hot' || mins >= 90) ? 0.75 : 0.667;
+    var day = Math.max(lb * dayRate, b2 + b15 + during + aft);
+    var sportsDrink = (mins >= 90) || (mins >= 60 && (heat === 'warm' || heat === 'hot'));
+    return { per20: per20, during: during, b2: b2, b15: b15, aft: aft, day: day, sd: sportsDrink, s: s, mins: mins, heat: heat, lb: lb };
+  }
+
+  function show(res) {
+    last = res;
+    var dayLo = r(res.day / 5) * 5, dayHi = dayLo + 10;
+    document.getElementById('rTotal').textContent = unit === 'kg' ? (ml(dayLo) / 1000).toFixed(1) + ' to ' + (ml(dayHi) / 1000).toFixed(1) + ' liters' : dayLo + ' to ' + dayHi + ' oz';
+    var bottles = Math.ceil(dayHi / 20);
+    document.getElementById('rTotalSub').textContent = 'Across the whole day for a ' + (unit === 'kg' ? Math.round(res.lb / 2.2046) + ' kg' : r(res.lb) + ' lb') + ' ' + res.s.name.toLowerCase() + ' athlete. That is about ' + bottles + ' standard 20 oz bottles, and food covers some of it.';
+    document.getElementById('rB2').textContent = both(r(res.b2));
+    document.getElementById('rB15').textContent = both(r(res.b15));
+    document.getElementById('rDur').textContent = both(r(res.per20));
+    var breaks = Math.max(1, Math.round(res.mins / 20));
+    document.getElementById('rDurSub').textContent = 'Every 20 minutes of play, about ' + both(r(res.during)) + ' over the ' + (res.mins >= 60 ? (res.mins / 60) + (res.mins === 60 ? ' hour' : ' hours') : res.mins + ' minutes');
+    document.getElementById('rAft').textContent = both(r(res.aft));
+    var d;
+    if (res.sd) {
+      d = 'This one is long or hot enough that a sports drink can help. Keep water as the main drink, and swap in a sports drink for about half of the "during" amount, mostly in the second half. Salty snacks (pretzels, crackers) between games help too.';
+    } else {
+      d = 'Water is enough for this one. A sports drink adds sugar they don\'t need for a game this length. Save it for long, hot days and multi-game tournaments.';
+    }
+    document.getElementById('rDrink').textContent = d;
+    var pack = [];
+    var gameOz = res.b15 + res.during + res.aft;
+    var gameBottles = Math.max(1, Math.ceil(gameOz / 20));
+    pack.push(gameBottles + (gameBottles === 1 ? ' full 20 oz water bottle' : ' full 20 oz water bottles') + ' for the field, plus a refill at home before you leave');
+    if (res.sd) pack.push('1 sports drink (12 to 20 oz), kept cold');
+    if (res.heat === 'warm' || res.heat === 'hot') { pack.push('1 bottle frozen the night before. It melts into ice-cold water by the second half'); pack.push('A wet towel or cooling towel in the cooler'); }
+    pack.push('Orange slices or watermelon for halftime. They count as fluid');
+    if (res.sd || res.mins >= 90) pack.push('A small bag of pretzels for salt');
+    document.getElementById('rPack').innerHTML = pack.map(function (p) { return '<li>' + esc(p) + '</li>'; }).join('');
+    var el = document.getElementById('hResult'); el.classList.add('show');
+    return el;
+  }
+
+  function readForm() {
+    var v = parseFloat(document.getElementById('w').value);
+    var lb = unit === 'kg' ? v * 2.2046 : v;
+    if (!v || lb < 40 || lb > 300) return null;
+    return { lb: lb, sport: document.getElementById('sport').value, mins: parseInt(chipVal('len'), 10), heat: chipVal('heat') };
+  }
+  function currentQuery() {
+    if (!last) return '';
+    return 'w=' + (unit === 'kg' ? Math.round(last.lb / 2.2046) + '&u=kg' : r(last.lb)) + '&s=' + encodeURIComponent(document.getElementById('sport').value) + '&m=' + last.mins + '&h=' + last.heat;
+  }
+  function shareMsg() {
+    if (!last) return 'Free game-day water calculator for youth athletes:';
+    return 'Game-day water plan (' + last.s.name + ', ' + (last.mins >= 60 ? (last.mins / 60) + ' hr' : last.mins + ' min') + '): ' + both(r(last.b2)) + ' 2 hours before, ' + both(r(last.per20)) + ' every 20 min during, ' + both(r(last.aft)) + ' after. Work out your own athlete\'s numbers:';
+  }
+
+  document.getElementById('hForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var f = readForm(), err = document.getElementById('wErr');
+    if (!f) { err.style.display = 'block'; document.getElementById('w').focus(); return; }
+    err.style.display = 'none';
+    var el = show(calc(f.lb, f.sport, f.mins, f.heat));
+    try { history.replaceState(null, '', '?' + currentQuery()); } catch (x) {}
+    track('hydration_calc', { sport: f.sport, minutes: f.mins, heat: f.heat });
+    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+
+  // Prefill from a shared link
+  var p = new URLSearchParams(location.search);
+  if (p.get('w')) {
+    if (p.get('u') === 'kg') { unit = 'kg'; [].forEach.call(unitBox.querySelectorAll('button'), function (x) { var on = x.getAttribute('data-u') === 'kg'; x.classList.toggle('on', on); x.setAttribute('aria-pressed', on ? 'true' : 'false'); }); }
+    document.getElementById('w').value = parseInt(p.get('w'), 10) || '';
+    if (SPORTS[p.get('s')]) document.getElementById('sport').value = p.get('s');
+    if (p.get('m')) setChip('len', p.get('m'));
+    if (p.get('h') && setChip('heat', p.get('h'))) heatTouched = true;
+    var f0 = readForm(); if (f0) show(calc(f0.lb, f0.sport, f0.mins, f0.heat));
+  }
+  wireShare();
+})();
+</script>
+<script src="/fuel-signup.js" defer></script>
+</body>
+</html>

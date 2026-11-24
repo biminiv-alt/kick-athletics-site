@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url><loc>https://kickathletics.com/</loc><changefreq>weekly</changefreq><priority>1.0</priority><lastmod>2026-11-23</lastmod></url>
+<url><loc>https://kickathletics.com/hydration-calculator/</loc><changefreq>monthly</changefreq><priority>0.9</priority><lastmod>2026-11-24</lastmod></url>
+<url><loc>https://kickathletics.com/tournament-packing-list/</loc><changefreq>monthly</changefreq><priority>0.9</priority><lastmod>2026-11-24</lastmod></url>
 <url><loc>https://kickathletics.com/team-snack-sheet/</loc><changefreq>monthly</changefreq><priority>0.8</priority><lastmod>2026-11-23</lastmod></url>
 <url><loc>https://kickathletics.com/articles/</loc><changefreq>weekly</changefreq><priority>0.8</priority><lastmod>2026-11-23</lastmod></url>
 <url><loc>https://kickathletics.com/articles/cramping-electrolyte-gap/</loc><changefreq>monthly</changefreq><priority>0.7</priority><lastmod>2026-11-23</lastmod></url>
